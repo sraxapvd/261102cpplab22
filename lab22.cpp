@@ -28,7 +28,136 @@ ComplexNumber ComplexNumber::operator-(const ComplexNumber &c){
 	return ComplexNumber(real-c.real,imag-c.imag);
 }
 
-//Write your code here
+// =======================
+// operator *
+// =======================
+ComplexNumber ComplexNumber::operator*(const ComplexNumber &c){
+    return ComplexNumber(
+        real*c.real - imag*c.imag,
+        real*c.imag + imag*c.real
+    );
+}
+
+// =======================
+// operator /
+// =======================
+ComplexNumber ComplexNumber::operator/(const ComplexNumber &c){
+    double denom = c.real*c.real + c.imag*c.imag;
+
+    return ComplexNumber(
+        (real*c.real + imag*c.imag)/denom,
+        (imag*c.real - real*c.imag)/denom
+    );
+}
+
+// =======================
+// operator ==
+// =======================
+bool ComplexNumber::operator==(const ComplexNumber &c){
+    return (real == c.real && imag == c.imag);
+}
+
+// =======================
+// abs()
+// =======================
+double ComplexNumber::abs(){
+    return sqrt(real*real + imag*imag);
+}
+
+// =======================
+// angle() (degree)
+// =======================
+double ComplexNumber::angle(){
+    return atan2(imag, real) * 180.0 / M_PI;
+}
+
+// =======================
+// operator กับ double
+// =======================
+
+// Complex + double
+ComplexNumber operator+(ComplexNumber c, double d){
+    return ComplexNumber(c.real + d, c.imag);
+}
+
+// double + Complex
+ComplexNumber operator+(double d, ComplexNumber c){
+    return ComplexNumber(d + c.real, c.imag);
+}
+
+// Complex - double
+ComplexNumber operator-(ComplexNumber c, double d){
+    return ComplexNumber(c.real - d, c.imag);
+}
+
+// double - Complex
+ComplexNumber operator-(double d, ComplexNumber c){
+    return ComplexNumber(d - c.real, -c.imag);
+}
+
+// Complex * double
+ComplexNumber operator*(ComplexNumber c, double d){
+    return ComplexNumber(c.real*d, c.imag*d);
+}
+
+// double * Complex
+ComplexNumber operator*(double d, ComplexNumber c){
+    return ComplexNumber(c.real*d, c.imag*d);
+}
+
+// Complex / double
+ComplexNumber operator/(ComplexNumber c, double d){
+    return ComplexNumber(c.real/d, c.imag/d);
+}
+
+// double / Complex
+ComplexNumber operator/(double d, ComplexNumber c){
+    double denom = c.real*c.real + c.imag*c.imag;
+
+    return ComplexNumber(
+        d*c.real/denom,
+        -d*c.imag/denom
+    );
+}
+
+// =======================
+// == กับ double
+// =======================
+
+// Complex == double
+bool operator==(ComplexNumber c, double d){
+    return (c.real == d && c.imag == 0);
+}
+
+// double == Complex
+bool operator==(double d, ComplexNumber c){
+    return (c.real == d && c.imag == 0);
+}
+
+// =======================
+// operator <<
+// =======================
+ostream& operator<<(ostream &os, ComplexNumber c){
+
+    if(c.real == 0 && c.imag == 0)
+        os << "0";
+
+    else if(c.imag == 0)
+        os << c.real;
+
+    else if(c.real == 0)
+        os << c.imag << "i";
+
+    else{
+        os << c.real;
+        if(c.imag > 0)
+            os << "+" << c.imag << "i";
+        else
+            os << c.imag << "i";
+    }
+
+    return os;
+}
 
 int main(){
 	ComplexNumber a(1.5,2),b(3.2,-2.5),c(-1,1.2);	
